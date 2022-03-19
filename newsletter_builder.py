@@ -76,6 +76,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('-o', "--output_file", action='store',dest='output_file', default='my_newsletter.html')
     parser.add_argument('-a', "--article_file", action="store", dest='articles_file', default='articles.txt')
+    parser.add_argument('-t', "--template", action="store", dest='template', default='1')
     parser.add_argument('-b', "--block_types", action='store', dest='block_types', type=int, nargs='+', default=None)
     
     args = parser.parse_args(sys.argv[1:])
@@ -93,7 +94,7 @@ if __name__ == "__main__":
         articles[i] = articles[i].strip()
         
     
-    template_fd = open("html_blocks/template2.html")
+    template_fd = open(f"html_blocks/template{args.template}.html")
     template = BeautifulSoup(template_fd.read(),features='lxml')    
     template_fd.close()
     
@@ -101,6 +102,7 @@ if __name__ == "__main__":
     
     sequential = []
     
+    print("FETCHING ARTICLES")
     for i in range(n_articles):
         bt = block_types[i]
         block = blocks[bt](articles[i])
@@ -112,6 +114,7 @@ if __name__ == "__main__":
     
     title = 'Newsletter'
 
+    print("COMPILING HTML")
     body.extend(sequential)
 
      
@@ -121,3 +124,5 @@ if __name__ == "__main__":
     html = str(template)
     newsletter.write(html)
     newsletter.close()
+
+    print("COMPLETED")
