@@ -124,6 +124,9 @@ if __name__ == "__main__":
     
     body.extend(sequential)
 
+    preview_text = sequential[0].text    
+
+    template.preview.insert(0, preview_text)
      
     newsletter = open('my_newsletter.html', 'w')
     template.title.insert(0,title)
