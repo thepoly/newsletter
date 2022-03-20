@@ -114,13 +114,22 @@ if __name__ == "__main__":
     
     title = 'Newsletter'
 
+    
+    
+    
     print("COMPILING HTML")
+    footer_fd = open('html_blocks/footer.html')
+    
+    footer = BeautifulSoup(footer_fd.read(), features='lxml')
+    
     body.extend(sequential)
 
      
     newsletter = open('my_newsletter.html', 'w')
     template.title.insert(0,title)
     template.year.insert(0,'2022')
+    
+    
     html = str(template)
     newsletter.write(html)
     newsletter.close()
